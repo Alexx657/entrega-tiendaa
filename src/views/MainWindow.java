@@ -28,12 +28,12 @@ import javax.swing.JTextField;
 
 public class MainWindow implements ActionListener, KeyListener{
 
-	private JFrame frame;
+	private JFrame frmSampleSwing;
 	private JButton btnNewButton;
 	private JButton btnNewButton_1;
 	private JLabel lblNewLabel;
-	public static int num_veces_pulsado = 0;
-	public static int letras_anadidas = 0;
+	public static int counterClicks = 0;
+	public static int counterLetters = 0;
 
 	private JTextField textField;
 	/**
@@ -44,7 +44,7 @@ public class MainWindow implements ActionListener, KeyListener{
 			public void run() {
 				try {
 					MainWindow window = new MainWindow();
-					window.frame.setVisible(true);
+					window.frmSampleSwing.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -63,44 +63,54 @@ public class MainWindow implements ActionListener, KeyListener{
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
-		frame.setBounds(400, 100, 617, 416);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
+		// launch main window
+		frmSampleSwing = new JFrame();
+		frmSampleSwing.setTitle("Sample Swing");
+		frmSampleSwing.setBounds(400, 100, 617, 416);
+		frmSampleSwing.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmSampleSwing.getContentPane().setLayout(null);
 		
-
-		btnNewButton = new JButton("Pulse aquí");
-		btnNewButton.setBounds(83, 191, 135, 42);
+		// create click button
+		btnNewButton = new JButton("Count clicks");
+		btnNewButton.setBounds(117, 64, 135, 42);
+		frmSampleSwing.getContentPane().add(btnNewButton);
+		// add listener action
 		btnNewButton.addActionListener(this);
-		frame.getContentPane().add(btnNewButton);
 		
-		lblNewLabel = new JLabel("");
-		lblNewLabel.setBounds(162, 123, 221, 32);
-		frame.getContentPane().add(lblNewLabel);
-		
-		btnNewButton_1 = new JButton("Pulse aquí 2");
-		btnNewButton_1.setBounds(115, 64, 135, 48);
+		// create nothing button 
+		btnNewButton_1 = new JButton("Do nothing");
+		btnNewButton_1.setBounds(117, 132, 135, 48);
+		// add listener action
 		btnNewButton_1.addActionListener(this);
-		frame.getContentPane().add(btnNewButton_1);
+		frmSampleSwing.getContentPane().add(btnNewButton_1);
 		
+		// create result label button
+		lblNewLabel = new JLabel("");
+		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblNewLabel.setBounds(185, 280, 221, 32);
+		frmSampleSwing.getContentPane().add(lblNewLabel);
+		
+		// create type text field
 		textField = new JTextField();
-		textField.setBounds(150, 260, 265, 32);
+		textField.setBounds(166, 209, 265, 32);
 		textField.setColumns(10);
+		// add listener action
 		textField.addActionListener(this);
+		// add listener key
 		textField.addKeyListener(this);
-		frame.getContentPane().add(textField);
+		frmSampleSwing.getContentPane().add(textField);
 
 
 	}
 	
     public void actionPerformed(ActionEvent e) {
     	if(e.getSource() == btnNewButton) {
-    		//Indica si se ha pulsado este botón en ESPECÍFICO
-    		num_veces_pulsado++;
-    		lblNewLabel.setText("Se ha pulsado "+ num_veces_pulsado + " veces");
+    		//in case clicks button
+    		counterClicks++;
+    		lblNewLabel.setText("Button clicked "+ counterClicks + " times");
     	}
-    	if(e.getSource() == textField) {
-    		lblNewLabel.setText("Se están escribiendo palabras...");
+    	if(e.getSource() == btnNewButton_1) {
+    		lblNewLabel.setText("Do nothing ...");
     	}
     }
 
@@ -113,8 +123,8 @@ public class MainWindow implements ActionListener, KeyListener{
 	@Override
 	public void keyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub
-		letras_anadidas++;
-		lblNewLabel.setText("Se están escribiendo " + letras_anadidas + " letras...");
+		counterLetters++;
+		lblNewLabel.setText("They are writing " + counterLetters + " letters...");
 	}
 
 	@Override
