@@ -8,6 +8,7 @@ public class LoginView extends JFrame implements ActionListener {
     private JTextField employeeNumberField;
     private JPasswordField passwordField;
     private JButton loginButton;
+    private int failedAttempts = 0; // Contador de intentos fallidos
 
     public LoginView() {
         // Configuración del JFrame
@@ -37,7 +38,7 @@ public class LoginView extends JFrame implements ActionListener {
         loginButton.setBounds(100, 80, 100, 25);
         add(loginButton);
 
-        // Añadir ActionListener al boton al boton
+        // Añadir ActionListener al botón
         loginButton.addActionListener(this);
     }
 
@@ -54,8 +55,14 @@ public class LoginView extends JFrame implements ActionListener {
                 shopView.setVisible(true);
                 this.dispose();
             } else {
-                // Mostrar mensaje de error
-                JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrectos", "Error", JOptionPane.ERROR_MESSAGE);
+                failedAttempts++; // Incrementar contador de intentos fallidos
+                if (failedAttempts >= 3) {
+                    JOptionPane.showMessageDialog(this, "Ha superado el número máximo de intentos fallidos.", "Error", JOptionPane.ERROR_MESSAGE);
+                    System.exit(0); // Cerrar la aplicación
+                } else {
+                    // Mostrar mensaje de error
+                    JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrectos", "Error", JOptionPane.ERROR_MESSAGE);
+                }
             }
         }
     }
